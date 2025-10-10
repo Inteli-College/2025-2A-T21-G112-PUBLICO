@@ -1,4 +1,4 @@
-[# 2025-2A-T21-G112-PUBLICO
+2025-2A-T21-G112-PUBLICO
 Repository for group 112 of class T21 (2025/2A)
 
 ## Resumo Executivo
@@ -57,5 +57,7 @@ Para mais detalhes acesse o outro arquivo.md que é possível encontrar mais det
 
 
 
-](https://www.linkedin.com/in/eduardo-franca-porto/)
+
+https://www.linkedin.com/in/eduardo-franca-porto/
+
 https://www.linkedin.com/in/marcos-teixeira-37676a24a/
