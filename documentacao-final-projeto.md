@@ -15,7 +15,7 @@
 
 ---
 
-## Resumo Executivo {#resumo-executivo}
+## Resumo Executivo
 
 **Crop Track** é o projeto que desenvolvemos com o objetivo de atuar com a **Agricultura de Precisão** baseada em **drones** e **inteligência artificial** para monitoramento de culturas perenes. A iniciativa focou na identificação de deficiências nutricionais e doenças em folhas de café através de modelos CNN customizados treinados do zero.
 
@@ -27,7 +27,7 @@
 - **Validação técnica** com imagens de doenças validadas por agrônomos
 
 
-## Visão Geral do Projeto {#visao-geral}
+## Visão Geral do Projeto 
 
 ### Objetivo Principal
 Desenvolver uma **Prova de Conceito (POC)** de um modelo de IA capaz de identificar deficiências nutricionais em folhas de café, utilizando imagens capturadas por drones, mas nesse primeiro momento validamos apenas o modelo de visão computacional.
@@ -59,7 +59,7 @@ A Crop Track é uma solução **B2B** para grandes produtores de culturas perene
 
 ---
 
-## Evolução Técnica por Sprint {#evolucao-tecnica}
+## Evolução Técnica por Sprint 
 
 ### Sprint 1 - Estruturação e Documentação
 **Objetivo:** Definir escopo, requisitos e preparar a base técnica do projeto.
@@ -162,8 +162,7 @@ A identificação precoce dessas doenças permite **intervenção rápida** e **
 
 ---
 
-## Resultados Alcançados {#resultados-alcancados}
-
+## Resultados Alcançados 
 ### Performance dos Modelos CNN Customizados
 
 #### 1. CustomCNN1 - **MODELO VENCEDOR**
@@ -272,7 +271,7 @@ phoma → Phoma
 
 ---
 
-## Análise Comparativa dos Modelos {#analise-comparativa}
+## Análise Comparativa dos Modelos
 
 ### Ranking de Performance:
 
@@ -330,7 +329,7 @@ phoma → Phoma
 
 ---
 
-## Validação e Testes {#validacao-testes}
+## Validação e Testes 
 
 ### Testes com Imagens Reais
 
@@ -404,7 +403,7 @@ Os resultados dos testes com imagens reais revelaram **limitações importantes*
 
 ---
 
-## Conclusões e Recomendações {#conclusoes}
+## Conclusões e Recomendações
 
 ### Principais Conquistas do Projeto
 
@@ -474,7 +473,7 @@ O treinamento com imagens reais apresentou **desafios significativos**:
 
 ---
 
-## Próximos Passos {#proximos-passos}
+## Próximos Passos 
 
 ### Para MVP (Minimum Viable Product):
 
