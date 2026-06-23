@@ -1,63 +1,70 @@
-2025-2A-T21-G112-PUBLICO
-Repository for group 112 of class T21 (2025/2A)
+# CropTrack — Monitoramento de Culturas Perenes por Visão Computacional
 
-## Resumo Executivo
+Repositório público da **Equipe G112 · Turma T21 (2025/2A) · Inteli**
+Eduardo França Porto · Marcos Vinicyus Rosa Teixeira — Orientador: Rodrigo Nicola
 
-**Crop Track** é o projeto que desenvolvemos com o objetivo de atuar com a **Agricultura de Precisão** baseada em **drones** e **inteligência artificial** para monitoramento de culturas perenes. A iniciativa focou na identificação de deficiências nutricionais e doenças em folhas de café através de modelos CNN customizados treinados do zero.
+> **A saúde do cafezal, detectada antes da perda.** Projeto **concluído**.
 
-### Principais Conquistas:
-- **Desenvolvimento de 3 arquiteturas CNN**
-- **Dataset massivo** de mais de 70,000 imagens de doenças do café
-- **Padronização de classes** de 10 para 5 categorias de doenças
-- **Implementação de técnicas avançadas** de treinamento e data augmentation
-- **Validação técnica** com imagens de doenças validadas por agrônomos
+## Resumo
 
+O **CropTrack** detecta precocemente doenças e pragas em folhas de café (foto ou
+vídeo), de forma confiável e **sem hardware proprietário**, entregando uma
+**decisão de manejo georreferenciada** — não apenas um rótulo. O café é o
+*beachhead* para as demais culturas perenes (citros, eucalipto, cacau, frutas).
 
-## Visão Geral do Projeto 
+**Modelo final:** YOLOv8n fine-tunado, ~3,01M parâmetros, 4 classes
+(`brown_eye_spot`, `leaf_miner`, `leaf_rust`, `red_spider_mite`) —
+**mAP@50 90,3%** · mAP@50-95 61,5% · Precision 85,8% · Recall 85,4%.
 
-### Objetivo Principal
-Desenvolver uma **Prova de Conceito (POC)** de um modelo de IA capaz de identificar deficiências nutricionais em folhas de café, utilizando imagens capturadas por drones, mas nesse primeiro momento validamos apenas o modelo de visão computacional.
+**Plataforma:** React + Flask · mapa de talhão georreferenciado · fluxo
+Gestor → Coletor → Gestor · análise de vídeo assíncrona com notificação ·
+dashboard agronômico · persistência.
 
-### Importância da Identificação de Doenças
-A identificação precoce de doenças em culturas é fundamental para:
-- **Reduzir perdas de produtividade** que podem chegar a 30-50% em casos severos
-- **Minimizar custos** com aplicação desnecessária de defensivos
-- **Preservar a qualidade** do produto final
-- **Otimizar o manejo** através de intervenções precisas e pontuais
-- **Aumentar a sustentabilidade** do cultivo com uso racional de insumos
+**Mercado e negócio:** SaaS por hectare · TAM R$ 1,8 bi / SAM R$ 114M / SOM
+R$ 1,2M · planos R$ 5–10/ha/mês · validação real (NPS +50, n=8) · canal
+Casa da Roça (PA) · piloto na lavoura da família em Jaguaré (ES).
 
-### Proposta de Valor
-A Crop Track é uma solução **B2B** para grandes produtores de culturas perenes, integrando:
-- **Captura de imagens por drones** equipados com cameras
-- **Análise via inteligência artificial** especializada
-- **Entrega de informações estratégicas** para manejo de culturas em larga escala
+## A jornada técnica (o pivot)
 
-### Segmento de Clientes
-- **Grandes empresas** e produtores de larga escala
-- **Cafeicultura** cultura de alto valor agregado e com ciclo de vida longa
-- **Clientes corporativos** que buscam maximizar produtividade e eficiência
+1. **Classificação própria (CustomCNN)** — alta acurácia em dataset público, mas
+   frágil em campo (60–70%) e respondendo à pergunta errada.
+2. **Detecção com YOLOv8 (fine-tuning)** — passou a entregar **onde** e **quanto**,
+   com menos dado, atingindo o nível de confiança exigido (mAP@50 90,3%).
 
-### Modelo de Negócio
-- **SaaS (Software as a Service)** com cobrança recorrente
-- Serviços complementares de operação de drones
-- Análise de dados sob demanda
-- Dashboard interativo com relatórios GIS/KML
+## Estrutura do repositório
 
+```
+modulo 14/                  Módulo 14 (classificação / CNNs)
+modulo 15/
+  ├─ CropTrack/             Plataforma final (Módulo XV)
+  │   ├─ backend/           API Flask + detecção YOLOv8
+  │   ├─ frontend/          App React (gestor/coletor/admin)
+  │   ├─ docs/              Documentação (Docusaurus) — Conclusão e
+  │   │                     Validação do Roadmap
+  │   ├─ metrics/           Métricas e gráficos do modelo
+  │   └─ notebooks/         Notebooks de treino/análise
+  └─ tcc EDUARDO.pdf
+documentacao-final-projeto.md
+```
+
+Como rodar a plataforma: `modulo 15/CropTrack/README_RUN.md`.
+Documentação completa (roadmap, sprints, conclusão): `modulo 15/CropTrack/docs/`.
 
 ## Conclusão
-Ao decorrer das semanas foi notado a dificuldade que é criar uma solução integrada ao todo, assim focamos no desenvolvimento de um bom modelo. Nas primeiras semanas apesar das métricas parecerem boas, o modelo sofria de overfit. Trabalhamos com técnicas avançadas de machine learning para melhorar o processo e conseguir resultados melhores. Assim, nas últimas sprints trabalhamos em melhorar os modelos e data sets utilizados. Na última entrega o resultado foi satisfatório, mas é preciso melhorar a acurácia do modelo e criar uma CNN mais robusta. 
 
-Assim, buscaremos melhorar os modelos e entregar uma solução completa, ao anlisar os resultados desenvolvidos nas últimas dez semanas é nótavel que todos os objetivos de aprendizado foram atingidos e o trabalho desenvolvido atingiu todas as metas.
+O projeto cumpriu integralmente seu roadmap nas duas fases. Na técnica, o pivot
+de classificação para **detecção (YOLOv8)** levou o modelo de uma POC frágil a um
+detector com **mAP@50 de 90,3%**, embarcado em uma plataforma de campo usável. Na
+fase de business, o problema foi **validado externamente (Y Combinator RFS 2026)**
+e **qualitativamente (NPS +50)**, com **canal e piloto já acessíveis** (Casa da
+Roça + Jaguaré). Mais do que um modelo, o CropTrack é um produto coerente com um
+problema real, construído com transparência sobre seu estágio (pré-piloto).
 
-Para mais detalhes acesse o outro arquivo.md que é possível encontrar mais detalhes sobre a documentação.
+O fim do módulo não é o fim do CropTrack — é o início do *go-to-market*.
 
+> *"Não monitoramos safras. Protegemos investimentos que levam décadas para crescer."*
 
+---
 
-
-
-
-
-
-https://www.linkedin.com/in/eduardo-franca-porto/
-
-https://www.linkedin.com/in/marcos-teixeira-37676a24a/
+[Eduardo França Porto](https://www.linkedin.com/in/eduardo-franca-porto/) ·
+[Marcos Vinicyus Rosa Teixeira](https://www.linkedin.com/in/marcos-teixeira-37676a24a/)
