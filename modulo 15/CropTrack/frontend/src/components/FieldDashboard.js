@@ -16,12 +16,25 @@ function FieldDashboard({ field, data, onClose }) {
                    (distribution.nutrient_deficiency || 0);
     const healthRate = total > 0 ? ((healthy / total) * 100).toFixed(0) : 0;
 
+    // Detection data
+    const totalDetections = data.total_detections || 0;
+    const diseasesFound = data.diseases_found || {};
+    const pestsFound = data.pests_found || {};
+    const otherClasses = data.other_classes || {};
+    const allClasses = { ...diseasesFound, ...pestsFound, ...otherClasses };
+    const uniqueClasses = Object.keys(allClasses).length;
+
     return {
       total,
       healthy,
       issues,
       healthRate,
-      distribution
+      distribution,
+      totalDetections,
+      diseasesFound,
+      pestsFound,
+      allClasses,
+      uniqueClasses,
     };
   }, [data]);
 
@@ -37,12 +50,12 @@ function FieldDashboard({ field, data, onClose }) {
 
   // Color mapping for health statuses
   const healthColors = {
-    healthy: { bg: '#ecfdf5', bar: '#059669', text: '#047857', icon: '✓' },
-    mildly_stressed: { bg: '#fffbeb', bar: '#d97706', text: '#b45309', icon: '⚠' },
-    diseased: { bg: '#fef2f2', bar: '#dc2626', text: '#b91c1c', icon: '✕' },
-    pest_damage: { bg: '#fef2f2', bar: '#ef4444', text: '#dc2626', icon: '🐛' },
-    nutrient_deficiency: { bg: '#f5f3ff', bar: '#7c3aed', text: '#6d28d9', icon: '▼' },
-    unknown: { bg: '#f8fafc', bar: '#64748b', text: '#475569', icon: '?' }
+    healthy: { bg: 'rgba(52,211,153,0.06)', bar: '#34d399', text: '#34d399', icon: '✓' },
+    mildly_stressed: { bg: 'rgba(251,191,36,0.06)', bar: '#fbbf24', text: '#fbbf24', icon: '⚠' },
+    diseased: { bg: 'rgba(248,113,113,0.06)', bar: '#f87171', text: '#f87171', icon: '✕' },
+    pest_damage: { bg: 'rgba(248,113,113,0.06)', bar: '#f87171', text: '#f87171', icon: '🐛' },
+    nutrient_deficiency: { bg: 'rgba(167,139,250,0.06)', bar: '#a78bfa', text: '#a78bfa', icon: '▼' },
+    unknown: { bg: 'rgba(139,143,163,0.06)', bar: '#8b8fa3', text: '#8b8fa3', icon: '?' }
   };
 
   // Generate alerts from unhealthy spots
@@ -189,6 +202,72 @@ function FieldDashboard({ field, data, onClose }) {
             <p className="stat-card-subtitle">Overall field health score</p>
           </div>
         </div>
+
+        {/* Detection Stats */}
+        {stats.totalDetections > 0 && (
+          <div className="dashboard-charts-grid">
+            <div className="chart-card" style={{ gridColumn: '1 / -1' }}>
+              <div className="chart-card-header">
+                <h3>Detection Summary</h3>
+                <span className="chart-card-subtitle">
+                  {stats.totalDetections} detections across {stats.uniqueClasses} classes
+                </span>
+              </div>
+              <div className="chart-area" style={{ minHeight: 'auto', paddingBottom: 8 }}>
+                {/* Top stat pills */}
+                <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+                  <div style={{ flex: 1, background: 'rgba(52,211,153,0.08)', borderRadius: 10, padding: '12px 16px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 28, fontWeight: 700, color: '#34d399' }}>{stats.totalDetections}</div>
+                    <div style={{ fontSize: 11, color: '#8b8fa3', fontWeight: 600 }}>Total Detections</div>
+                  </div>
+                  <div style={{ flex: 1, background: 'rgba(248,113,113,0.08)', borderRadius: 10, padding: '12px 16px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 28, fontWeight: 700, color: '#f87171' }}>{Object.keys(stats.diseasesFound).length}</div>
+                    <div style={{ fontSize: 11, color: '#8b8fa3', fontWeight: 600 }}>Disease Types</div>
+                  </div>
+                  <div style={{ flex: 1, background: 'rgba(167,139,250,0.08)', borderRadius: 10, padding: '12px 16px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 28, fontWeight: 700, color: '#a78bfa' }}>{Object.keys(stats.pestsFound).length}</div>
+                    <div style={{ fontSize: 11, color: '#8b8fa3', fontWeight: 600 }}>Pest Types</div>
+                  </div>
+                  <div style={{ flex: 1, background: 'rgba(96,165,250,0.08)', borderRadius: 10, padding: '12px 16px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 28, fontWeight: 700, color: '#60a5fa' }}>{stats.uniqueClasses}</div>
+                    <div style={{ fontSize: 11, color: '#8b8fa3', fontWeight: 600 }}>Unique Classes</div>
+                  </div>
+                </div>
+
+                {/* Class breakdown bars */}
+                <div className="bar-chart">
+                  {Object.entries(stats.allClasses)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10)
+                    .map(([cls, count]) => {
+                      const maxCount = Math.max(...Object.values(stats.allClasses));
+                      const pct = maxCount > 0 ? (count / maxCount) * 100 : 0;
+                      const isDisease = cls in stats.diseasesFound;
+                      const isPest = cls in stats.pestsFound;
+                      const color = isDisease ? '#f87171' : isPest ? '#fbbf24' : '#60a5fa';
+                      const bg = isDisease ? 'rgba(248,113,113,0.06)' : isPest ? 'rgba(251,191,36,0.06)' : 'rgba(96,165,250,0.06)';
+                      return (
+                        <div key={cls} className="bar-chart-row" style={{ background: bg }}>
+                          <div className="bar-chart-label">
+                            <span className="bar-label-text" style={{ color }}>
+                              {cls.replace(/_/g, ' ')}
+                            </span>
+                            <span className="bar-label-pct">
+                              {isDisease ? 'disease' : isPest ? 'pest' : 'species'}
+                            </span>
+                          </div>
+                          <div className="bar-chart-bar-bg">
+                            <div className="bar-chart-bar" style={{ width: `${pct}%`, background: color }} />
+                          </div>
+                          <span className="bar-chart-count" style={{ color }}>{count}</span>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Charts Section */}
         <div className="dashboard-charts-grid">
@@ -394,6 +473,42 @@ function FieldDashboard({ field, data, onClose }) {
                       </span>
                     </div>
                   </>
+                )}
+                {field?.soil_type && (
+                  <div className="field-info-item">
+                    <span className="field-info-label">Soil Type</span>
+                    <span className="field-info-value">{field.soil_type.replace(/_/g, ' ')}</span>
+                  </div>
+                )}
+                {field?.soil_treatment && (
+                  <div className="field-info-item">
+                    <span className="field-info-label">Soil Treatment</span>
+                    <span className="field-info-value">{field.soil_treatment.replace(/_/g, ' ')}</span>
+                  </div>
+                )}
+                {field?.irrigation_type && (
+                  <div className="field-info-item">
+                    <span className="field-info-label">Irrigation</span>
+                    <span className="field-info-value">{field.irrigation_type.replace(/_/g, ' ')}</span>
+                  </div>
+                )}
+                {field?.planting_date && (
+                  <div className="field-info-item">
+                    <span className="field-info-label">Planting Date</span>
+                    <span className="field-info-value">{new Date(field.planting_date).toLocaleDateString()}</span>
+                  </div>
+                )}
+                {field?.plant_spacing && (
+                  <div className="field-info-item">
+                    <span className="field-info-label">Spacing</span>
+                    <span className="field-info-value">{field.plant_spacing}</span>
+                  </div>
+                )}
+                {field?.estimated_plants && (
+                  <div className="field-info-item">
+                    <span className="field-info-label">Est. Plants</span>
+                    <span className="field-info-value">{field.estimated_plants.toLocaleString()}</span>
+                  </div>
                 )}
               </div>
             </div>

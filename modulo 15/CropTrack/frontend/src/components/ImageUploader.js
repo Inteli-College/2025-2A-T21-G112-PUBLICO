@@ -154,31 +154,13 @@ function ImageUploader() {
               )}
             </div>
 
-            <div className="model-selector">
-              <label htmlFor="model-select">AI Model</label>
-              <select
-                id="model-select"
-                value={selectedModel}
-                onChange={(e) => setSelectedModel(e.target.value)}
-                className="model-select"
-                disabled={loading}
-              >
-                {availableModels.length === 0 ? (
-                  <option value="">{error ? 'No models found' : 'Loading models...'}</option>
-                ) : (
-                  availableModels.map((model) => (
-                    <option key={model.name} value={model.name}>
-                      {model.name} ({model.num_classes} classes)
-                    </option>
-                  ))
-                )}
-              </select>
-              {availableModels.length > 0 && (
-                <div className="model-info-text">
-                  {availableModels.length} model{availableModels.length !== 1 ? 's' : ''} available for analysis
-                </div>
-              )}
-            </div>
+            {availableModels.length > 0 && (
+              <div className="model-badge">
+                <span className="model-badge-label">Model</span>
+                <span className="model-badge-name">{availableModels[0].name}</span>
+                <span className="model-badge-sub">{availableModels[0].num_classes}-class ensemble · JMuBEN</span>
+              </div>
+            )}
 
             <button
               className="predict-btn"
@@ -199,47 +181,51 @@ function ImageUploader() {
             <div className="prediction-results">
               <h2>Analysis Results</h2>
 
-              <div className="main-prediction">
-                <div className="prediction-card">
-                  <div className="prediction-label">
-                    {prediction.predicted_class}
-                  </div>
-                  <div className="confidence-bar-container">
-                    <div
-                      className="confidence-bar"
-                      style={{ width: `${prediction.confidence * 100}%` }}
-                    />
-                  </div>
-                  <div className="confidence-text">
-                    {(prediction.confidence * 100).toFixed(2)}% confidence
-                  </div>
+              {prediction.annotated_image && (
+                <div className="main-prediction">
+                  <img
+                    src={prediction.annotated_image}
+                    alt="Annotated detections"
+                    className="image-preview"
+                    style={{ maxWidth: '100%', borderRadius: 12 }}
+                  />
                 </div>
-              </div>
+              )}
 
               <div className="all-predictions">
-                <h3>Class Probabilities</h3>
-                <div className="probability-list">
-                  {prediction.top_predictions.map((item, index) => (
-                    <div key={index} className="probability-item">
-                      <div className="probability-header">
-                        <span className="class-name">{item.class}</span>
-                        <span className="probability-value">
-                          {(item.probability * 100).toFixed(2)}%
-                        </span>
+                <h3>
+                  {prediction.num_detections > 0
+                    ? `${prediction.num_detections} detection${prediction.num_detections > 1 ? 's' : ''}`
+                    : 'No disease or pest detected'}
+                </h3>
+                {prediction.detections && prediction.detections.length > 0 ? (
+                  <div className="probability-list">
+                    {prediction.detections.map((det, index) => (
+                      <div key={index} className="probability-item">
+                        <div className="probability-header">
+                          <span className="class-name">{det.class.replace(/_/g, ' ')}</span>
+                          <span className="probability-value">
+                            {(det.confidence * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                        <div className="probability-bar-container">
+                          <div
+                            className="probability-bar"
+                            style={{ width: `${det.confidence * 100}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className="probability-bar-container">
-                        <div
-                          className="probability-bar"
-                          style={{ width: `${item.probability * 100}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ opacity: 0.7 }}>
+                    No diseases or pests detected above the confidence threshold.
+                  </p>
+                )}
               </div>
 
               <div className="model-info">
-                Model used: {prediction.model_used}
+                AI Engine: CropTrack Vision
               </div>
             </div>
           )}

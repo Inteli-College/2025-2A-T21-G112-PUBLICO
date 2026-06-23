@@ -4,14 +4,18 @@
   "description": "React frontend for coffee leaf disease classification",
   "private": true,
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "@tailwindcss/postcss": "^4.2.2",
     "axios": "^1.6.0",
     "leaflet": "^1.9.4",
+    "lucide-react": "^1.7.0",
+    "postcss": "^8.5.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
     "react-leaflet-draw": "^0.20.4",
-    "react-router-dom": "^6.20.0"
+    "react-router-dom": "^6.20.0",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^4.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -36,6 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://127.0.0.1:5001"
 }
-

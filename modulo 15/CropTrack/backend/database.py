@@ -11,17 +11,26 @@ db = SQLAlchemy()
 class Field(db.Model):
     """Field model - stores field polygons"""
     __tablename__ = 'fields'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     crop_type = db.Column(db.String(100))
     polygon_coordinates = db.Column(db.Text, nullable=False)  # JSON string
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
+
+    # Agricultural details
+    soil_type = db.Column(db.String(100))        # e.g. clay, sandy, loam, silt
+    soil_treatment = db.Column(db.String(200))    # e.g. liming, fertilization, none
+    planting_date = db.Column(db.String(20))      # ISO date string
+    irrigation_type = db.Column(db.String(100))   # e.g. drip, sprinkler, rain-fed, pivot
+    plant_spacing = db.Column(db.String(50))      # e.g. "3x1.5m"
+    estimated_plants = db.Column(db.Integer)
+    notes = db.Column(db.Text)
+
     # Relationship
     spots = db.relationship('Spot', backref='field', lazy=True, cascade='all, delete-orphan')
-    
+
     def to_dict(self):
         """Convert to dictionary for JSON serialization"""
         return {
@@ -31,7 +40,14 @@ class Field(db.Model):
             'polygon_coordinates': json.loads(self.polygon_coordinates),
             'spot_count': len(self.spots),
             'created_at': self.created_at.isoformat() if self.created_at else None,
-            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'soil_type': self.soil_type,
+            'soil_treatment': self.soil_treatment,
+            'planting_date': self.planting_date,
+            'irrigation_type': self.irrigation_type,
+            'plant_spacing': self.plant_spacing,
+            'estimated_plants': self.estimated_plants,
+            'notes': self.notes,
         }
     
     def get_polygon_coords(self):
@@ -117,5 +133,40 @@ class AnalysisResult(db.Model):
             },
             'processing_time_ms': self.processing_time_ms,
             'analyzed_at': self.analyzed_at.isoformat() if self.analyzed_at else None
+        }
+
+
+class VideoAnalysis(db.Model):
+    """Persisted annotated video produced by /api/analyze-video.
+
+    Stored on disk under uploads/videos/ (git-ignored) so analyzed videos
+    survive restarts and show up on the gestor dashboard.
+    """
+    __tablename__ = 'video_analyses'
+
+    id = db.Column(db.Integer, primary_key=True)
+    job_id = db.Column(db.String(64))
+    original_filename = db.Column(db.String(300))
+    stored_path = db.Column(db.String(500), nullable=False)
+    total_detections = db.Column(db.Integer, default=0)
+    frames_analyzed = db.Column(db.Integer, default=0)
+    total_frames = db.Column(db.Integer, default=0)
+    classes = db.Column(db.Text)  # JSON object {class: count}
+    model_version = db.Column(db.String(50))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'filename': self.original_filename,
+            'url': f'/api/videos/{self.id}/file',
+            'stats': {
+                'totalDetections': self.total_detections,
+                'framesAnalyzed': self.frames_analyzed,
+                'totalFrames': self.total_frames,
+                'classes': json.loads(self.classes) if self.classes else {},
+            },
+            'model': self.model_version,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
         }
 

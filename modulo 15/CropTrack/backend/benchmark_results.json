@@ -1,0 +1,72 @@
+{
+  "BinaryCNN_Deep": {
+    "framework": "PyTorch",
+    "error": "Error(s) in loading state_dict for BinaryCNN_Deep:\n\tsize mismatch for classifier.1.weight: copying a param with shape torch.Size([128, 512]) from checkpoint, the shape in current model is torch.Size([256, 512]).\n\tsize mismatch for classifier.1.bias: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).\n\tsize mismatch for classifier.4.weight: copying a param with shape torch.Size([2, 128]) from checkpoint, the shape in current model is torch.Size([128, 256]).\n\tsize mismatch for classifier.4.bias: copying a param with shape torch.Size([2]) from checkpoint, the shape in current model is torch.Size([128])."
+  },
+  "BinaryCNN_Efficient": {
+    "framework": "PyTorch",
+    "file_mb": 0.73,
+    "load_time_s": 0.016,
+    "inference_ms_mean": 11.61,
+    "inference_ms_std": 1.91,
+    "inference_ms_p95": 15.2,
+    "throughput_img_s": 86.16,
+    "memory_delta_mb": 0.2,
+    "num_classes": 2
+  },
+  "BinaryCNN_Light": {
+    "framework": "PyTorch",
+    "file_mb": 1.63,
+    "load_time_s": 0.01,
+    "inference_ms_mean": 11.53,
+    "inference_ms_std": 1.02,
+    "inference_ms_p95": 13.04,
+    "throughput_img_s": 86.71,
+    "memory_delta_mb": 0.0,
+    "num_classes": 2
+  },
+  "CustomCNN1": {
+    "framework": "PyTorch",
+    "file_mb": 4.64,
+    "load_time_s": 0.019,
+    "inference_ms_mean": 30.62,
+    "inference_ms_std": 3.5,
+    "inference_ms_p95": 34.36,
+    "throughput_img_s": 32.66,
+    "memory_delta_mb": 0.0,
+    "num_classes": 10
+  },
+  "CustomCNN2": {
+    "framework": "PyTorch",
+    "file_mb": 43.34,
+    "load_time_s": 0.108,
+    "inference_ms_mean": 23.63,
+    "inference_ms_std": 3.68,
+    "inference_ms_p95": 30.11,
+    "throughput_img_s": 42.32,
+    "memory_delta_mb": 59.9,
+    "num_classes": 10
+  },
+  "CustomCNN3": {
+    "framework": "PyTorch",
+    "file_mb": 5.43,
+    "load_time_s": 0.028,
+    "inference_ms_mean": 10.23,
+    "inference_ms_std": 1.5,
+    "inference_ms_p95": 12.88,
+    "throughput_img_s": 97.79,
+    "memory_delta_mb": 0.0,
+    "num_classes": 10
+  },
+  "CustomCNN_SE": {
+    "framework": "Keras",
+    "file_mb": 16.76,
+    "load_time_s": 0.489,
+    "inference_ms_mean": 78.21,
+    "inference_ms_std": 6.35,
+    "inference_ms_p95": 91.44,
+    "throughput_img_s": 12.79,
+    "memory_delta_mb": 4.8,
+    "num_classes": 5
+  }
+}

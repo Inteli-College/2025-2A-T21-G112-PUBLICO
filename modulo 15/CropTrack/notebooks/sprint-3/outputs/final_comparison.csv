@@ -1,0 +1,6 @@
+Model,Accuracy,Top-3,Loss
+Ensemble (Top 3),99.92%,–,–
+CustomCNN_SE,99.86%,100.00%,0.3976
+MobileNetV3Large,73.56%,97.48%,0.9478
+EfficientNetB0_CutMix,20.00%,60.00%,1.6094
+EfficientNetB1_MixUp,20.00%,60.00%,1.6094

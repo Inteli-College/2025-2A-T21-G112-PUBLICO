@@ -3,27 +3,27 @@ import './WeatherWidget.css';
 
 // Weather code to icon and description mapping
 const weatherCodes = {
-  0: { icon: '☀️', desc: 'Clear sky' },
-  1: { icon: '🌤️', desc: 'Mainly clear' },
-  2: { icon: '⛅', desc: 'Partly cloudy' },
-  3: { icon: '☁️', desc: 'Overcast' },
-  45: { icon: '🌫️', desc: 'Foggy' },
-  48: { icon: '🌫️', desc: 'Depositing rime fog' },
-  51: { icon: '🌧️', desc: 'Light drizzle' },
-  53: { icon: '🌧️', desc: 'Moderate drizzle' },
-  55: { icon: '🌧️', desc: 'Dense drizzle' },
-  61: { icon: '🌧️', desc: 'Slight rain' },
-  63: { icon: '🌧️', desc: 'Moderate rain' },
-  65: { icon: '🌧️', desc: 'Heavy rain' },
-  71: { icon: '🌨️', desc: 'Slight snow' },
-  73: { icon: '🌨️', desc: 'Moderate snow' },
-  75: { icon: '❄️', desc: 'Heavy snow' },
-  80: { icon: '🌦️', desc: 'Rain showers' },
-  81: { icon: '🌦️', desc: 'Moderate showers' },
-  82: { icon: '⛈️', desc: 'Violent showers' },
-  95: { icon: '⛈️', desc: 'Thunderstorm' },
-  96: { icon: '⛈️', desc: 'Thunderstorm with hail' },
-  99: { icon: '⛈️', desc: 'Severe thunderstorm' }
+  0: { icon: '☀️', desc: 'Céu limpo' },
+  1: { icon: '🌤️', desc: 'Predom. limpo' },
+  2: { icon: '⛅', desc: 'Parcial. nublado' },
+  3: { icon: '☁️', desc: 'Encoberto' },
+  45: { icon: '🌫️', desc: 'Nevoeiro' },
+  48: { icon: '🌫️', desc: 'Nevoeiro' },
+  51: { icon: '🌧️', desc: 'Garoa fraca' },
+  53: { icon: '🌧️', desc: 'Garoa' },
+  55: { icon: '🌧️', desc: 'Garoa densa' },
+  61: { icon: '🌧️', desc: 'Chuva fraca' },
+  63: { icon: '🌧️', desc: 'Chuva' },
+  65: { icon: '🌧️', desc: 'Chuva forte' },
+  71: { icon: '🌨️', desc: 'Neve fraca' },
+  73: { icon: '🌨️', desc: 'Neve' },
+  75: { icon: '❄️', desc: 'Neve forte' },
+  80: { icon: '🌦️', desc: 'Pancadas' },
+  81: { icon: '🌦️', desc: 'Pancadas' },
+  82: { icon: '⛈️', desc: 'Pancadas fortes' },
+  95: { icon: '⛈️', desc: 'Trovoada' },
+  96: { icon: '⛈️', desc: 'Trovoada/granizo' },
+  99: { icon: '⛈️', desc: 'Trovoada severa' }
 };
 
 const getWeatherInfo = (code) => {
@@ -31,10 +31,10 @@ const getWeatherInfo = (code) => {
 };
 
 const getDayName = (dateStr, index) => {
-  if (index === 0) return 'Today';
-  if (index === 1) return 'Tomorrow';
+  if (index === 0) return 'Hoje';
+  if (index === 1) return 'Amanhã';
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { weekday: 'short' });
+  return date.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
 };
 
 function WeatherWidget({ latitude, longitude }) {
@@ -79,7 +79,7 @@ function WeatherWidget({ latitude, longitude }) {
     return (
       <div className="weather-widget loading">
         <div className="weather-loading-spinner" />
-        <span>Loading weather...</span>
+        <span>Carregando clima...</span>
       </div>
     );
   }
@@ -88,7 +88,7 @@ function WeatherWidget({ latitude, longitude }) {
     return (
       <div className="weather-widget error">
         <span className="weather-error-icon">⚠️</span>
-        <span>{error || 'Weather unavailable'}</span>
+        <span>{error || 'Clima indisponível'}</span>
       </div>
     );
   }
@@ -125,7 +125,7 @@ function WeatherWidget({ latitude, longitude }) {
 
       {/* 7-Day Forecast */}
       <div className="weather-forecast">
-        <div className="weather-forecast-title">7-Day Forecast</div>
+        <div className="weather-forecast-title">Previsão · 7 dias</div>
         <div className="weather-forecast-list">
           {daily.time.slice(0, 7).map((date, index) => {
             const dayWeather = getWeatherInfo(daily.weather_code[index]);

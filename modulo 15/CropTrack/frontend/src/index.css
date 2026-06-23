@@ -51,20 +51,27 @@
   --danger-100: #fee2e2;
   --danger-50: #fef2f2;
 
-  /* Neutral Colors (with subtle green undertone) */
-  --slate-900: #0c1f17;
-  --slate-800: #1a2f25;
-  --slate-700: #2d3f36;
-  --slate-600: #445249;
-  --slate-500: #5f6e64;
-  --slate-400: #8a9a90;
-  --slate-300: #b8c5bc;
-  --slate-200: #dce5df;
-  --slate-100: #eef3f0;
-  --slate-50: #f6f9f7;
+  /* Neutral Colors (corporate cool greys) */
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+
+  /* Corporate Brand — inspired by OilTracking */
+  --navy-900: #14141f;
+  --navy-800: #1a1a2e;
+  --navy-700: #252540;
+  --navy-border: #2d2d4a;
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Outfit', 'DM Sans', sans-serif;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -81,17 +88,58 @@
   --radius-xl: 1rem;
 }
 
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Import Google Fonts — Fraunces (editorial serif) + DM Sans + JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Editorial corporate palette */
+  --ink: #0e0f15;
+  --ink-2: #141622;
+  --ink-3: #1c1e2e;
+  --ink-line: rgba(255, 255, 255, 0.08);
+  --ink-line-2: rgba(255, 255, 255, 0.14);
+  --ink-text: #ededea;
+  --ink-text-dim: #8b8d98;
+  --ink-text-faint: #5a5c6a;
+
+  --emerald: #34d399;
+  --emerald-bright: #6ee7b7;
+  --emerald-deep: #10b981;
+  --emerald-ink: #0a2e22;
+
+  --bean: #d4a574;           /* coffee bean accent */
+  --bean-deep: #a67c4e;
+
+  --cream: #f6f3ec;           /* warm paper section */
+  --cream-2: #ebe6da;
+  --cream-ink: #1a1814;
+
+  --font-display: 'Fraunces', 'Outfit', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--slate-100);
-  color: var(--slate-800);
-  line-height: 1.6;
+  font-family: var(--font-body);
+  background-color: var(--ink);
+  color: var(--ink-text);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  font-feature-settings: 'ss01', 'ss02';
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--ink-text);
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+::selection {
+  background: var(--emerald);
+  color: var(--ink);
 }
 
 code {
