@@ -9,8 +9,8 @@ Final Course Project (TCC) submitted to the Institute of Technology and Leadersh
 **Advisor:** Prof. Rodrigo Nicola
 **Team G112 · T21 · São Paulo · 2025/2A**
 
-> Projeto **concluído**. Este README segue a estrutura do Template de TCC do Inteli
-> (Trilha Empreendedora, NBR 14724).
+> Project **completed**. This README follows the structure of INTELI's Final Course
+> Project template (Entrepreneurial track, NBR 14724).
 
 ---
 
@@ -33,26 +33,6 @@ the next step.
 
 **Keywords:** computer vision; object detection; coffee; precision agriculture;
 software as a service.
-
-## Resumo
-
-O CropTrack é uma plataforma B2B de visão computacional que detecta precocemente
-doenças e pragas em folhas de café, a partir de imagem ou vídeo, sem hardware
-proprietário. O trabalho pivotou de um **classificador CNN** próprio (frágil em
-campo, 60–70%) para um **detector YOLOv8** fine-tunado, que responde *onde* e
-*quanto* de doença há e atingiu **90,3% de mAP@50** (precisão 85,8%, recall 85,4%)
-em quatro classes de café. Em volta do modelo construiu-se uma plataforma de campo
-(React + Flask): mapa de talhão georreferenciado, fluxo Gestor → Coletor → Gestor,
-análise de vídeo assíncrona com notificação e dashboard agronômico. O mercado foi
-dimensionado (TAM R$ 1,8 bi / SAM R$ 114 M / SOM R$ 1,2 M) e definido um modelo
-SaaS por hectare (R$ 5–10/ha/mês). A validação foi qualitativa e medida (NPS +50,
-n = 8 agrônomos), com canal real (Casa da Roça, PA) e piloto de campo (Jaguaré,
-ES). O problema foi validado externamente pela Request for Startups 2026 da Y
-Combinator. O projeto é pré-piloto: a validação com ground truth de campo é o
-próximo passo.
-
-**Palavras-chave:** visão computacional; detecção de objetos; café; agricultura de
-precisão; software como serviço.
 
 ---
 
